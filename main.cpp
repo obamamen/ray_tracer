@@ -1,23 +1,43 @@
+#include <cstdint>
 #include <iostream>
 #include <fstream>
 
 
 #include "rendering/texture.hpp"
 
+struct rand_s
+{
+    uint64_t state = 1ULL;
+
+    uint64_t get_next()
+    {
+        state = state * 877153429960259ULL;
+        state = (state >> 32) ^ (state >> 24);
+        return state ^ (state >> 16);
+    }
+
+    float get_float()
+    {
+        return static_cast<float>(get_next() & 0xFFFFFF) / static_cast<float>(0x1000000);
+    }
+};
+
 bool save_bmp(const texture& tex, const char* filename);
 
 int main()
 {
-    texture texture(100,100);
+    texture texture(1000,1000);
+    rand_s rand;
     for (int x = 0; x < texture.width; x++)
     {
         for (int y = 0; y < texture.height; y++)
         {
-            texture.at(x, y) = color(
-                static_cast<float>(x) / texture.width,
-                static_cast<float>(y) / texture.height,
-                0.0f
-            );
+            // texture.at(x, y) = color(
+            //     static_cast<float>(x) / texture.width,
+            //     static_cast<float>(y) / texture.height,
+            //     0.0f
+            // );
+            texture.at(x,y) = color(rand.get_float(), 0, 0);
         }
     }
     save_bmp(texture, "test.bmp");

@@ -1,11 +1,23 @@
 CMakeFiles\ray_tracer.dir\main.cpp.obj.ddi: \
  C:/Users/Gebruiker/Documents/ray_tracer/main.cpp \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/iostream \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/requires_hosted.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/cstdint \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/x86_64-w64-mingw32/bits/c++config.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/x86_64-w64-mingw32/bits/os_defines.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/x86_64-w64-mingw32/bits/cpu_defines.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/pstl/pstl_config.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/stdint.h \
+ C:/mingw64/x86_64-w64-mingw32/include/stdint.h \
+ C:/mingw64/x86_64-w64-mingw32/include/crtdefs.h \
+ C:/mingw64/x86_64-w64-mingw32/include/corecrt.h \
+ C:/mingw64/x86_64-w64-mingw32/include/_mingw.h \
+ C:/mingw64/x86_64-w64-mingw32/include/_mingw_mac.h \
+ C:/mingw64/x86_64-w64-mingw32/include/_mingw_secapi.h \
+ C:/mingw64/x86_64-w64-mingw32/include/vadefs.h \
+ C:/mingw64/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/stddef.h \
+ C:/mingw64/x86_64-w64-mingw32/include/stddef.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/iostream \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/requires_hosted.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/ostream \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/ostream.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/ios \
@@ -15,12 +27,6 @@ CMakeFiles\ray_tracer.dir\main.cpp.obj.ddi: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/postypes.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/cwchar \
  C:/mingw64/x86_64-w64-mingw32/include/wchar.h \
- C:/mingw64/x86_64-w64-mingw32/include/corecrt.h \
- C:/mingw64/x86_64-w64-mingw32/include/_mingw.h \
- C:/mingw64/x86_64-w64-mingw32/include/_mingw_mac.h \
- C:/mingw64/x86_64-w64-mingw32/include/_mingw_secapi.h \
- C:/mingw64/x86_64-w64-mingw32/include/vadefs.h \
- C:/mingw64/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h \
  C:/mingw64/x86_64-w64-mingw32/include/corecrt_stdio_config.h \
  C:/mingw64/x86_64-w64-mingw32/include/corecrt_wstdlib.h \
  C:/mingw64/x86_64-w64-mingw32/include/_mingw_off_t.h \
@@ -33,9 +39,6 @@ CMakeFiles\ray_tracer.dir\main.cpp.obj.ddi: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/exception_ptr.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/exception_defines.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/cxxabi_init_exception.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/stddef.h \
- C:/mingw64/x86_64-w64-mingw32/include/stddef.h \
- C:/mingw64/x86_64-w64-mingw32/include/crtdefs.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/typeinfo \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/hash_bytes.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/new \
