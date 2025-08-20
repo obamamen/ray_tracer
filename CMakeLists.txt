@@ -10,4 +10,4 @@ file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 file(GLOB_RECURSE HEADERS "include/*.hpp" "include/*.h")
 
-add_executable(rt main.cpp ${SOURCES} ${HEADERS})
+add_executable(ray_tracer main.cpp ${SOURCES} ${HEADERS})
