@@ -63884,6 +63884,7 @@ struct texture
 };
 # 7 "C:/Users/Gebruiker/Documents/ray_tracer/main.cpp" 2
 
+
 struct rand_s
 {
     uint64_t state = 1ULL;
@@ -63919,7 +63920,7 @@ int main()
             texture.at(x,y) = color(rand.get_float(), 0, 0);
         }
     }
-    save_bmp(texture, "test.bmp");
+    save_bmp(texture, "output.bmp");
     return 0;
 }
 

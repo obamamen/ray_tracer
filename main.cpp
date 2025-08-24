@@ -5,6 +5,7 @@
 
 #include "rendering/texture.hpp"
 
+
 struct rand_s
 {
     uint64_t state = 1ULL;
@@ -40,7 +41,7 @@ int main()
             texture.at(x,y) = color(rand.get_float(), 0, 0);
         }
     }
-    save_bmp(texture, "test.bmp");
+    save_bmp(texture, "output.bmp");
     return 0;
 }
 
@@ -97,7 +98,7 @@ bool save_bmp(const texture& tex, const char* filename) // chatgpt
 
     out.write((char*)file_header, 14);
     out.write((char*)info_header, 40);
-
+xdekwcjsimzr hau,
     unsigned char pad[3] = {0,0,0};
 
     // BMP rows are bottom-to-top
