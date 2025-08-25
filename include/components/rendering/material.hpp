@@ -15,10 +15,11 @@ struct material
 {
     color albedo;
     float reflectivity;
+    color emission;
 
 
-    material() : albedo(1,1,1), reflectivity(0) {}
-    material(const color& c, const float reflectivity) : albedo(c), reflectivity(reflectivity) {}
+    material() : albedo(1,1,1), reflectivity(0), emission(0,0,0) {}
+    material(const color& c, float r, const color& e=color(0,0,0)) : albedo(c), reflectivity(r), emission(e) {}
 };
 
 #endif // RAY_TRACER_MATERIAL

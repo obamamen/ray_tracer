@@ -1,9 +1,9 @@
 # ninja log v6
-298	332	7778333648251830	CMakeFiles/ray_tracer.dir/main.cpp.obj.modmap	1ab6e5169d62e66a
+301	336	7778455768953385	CMakeFiles/ray_tracer.dir/main.cpp.obj.modmap	1ab6e5169d62e66a
 819	1002	7774037404634866	rt.exe	16035ef791542de
-4	350	7778335354492380	build.ninja	1aea443985884787
-11	298	7778333645391832	CMakeFiles/ray_tracer.dir/main.cpp.obj.ddi	6ff2a9480a3e1685
-1054	1211	7778333655811828	ray_tracer.exe	35b6d1d193c7b5ee
-333	1054	7778333648601832	CMakeFiles/ray_tracer.dir/main.cpp.obj	c8ae7e46d4165c67
-298	332	7778333648251830	CMakeFiles/ray_tracer.dir/CXX.dd	1ab6e5169d62e66a
-298	332	7778333648251830	C:/Users/Gebruiker/Documents/ray_tracer/cmake-build-debug/CMakeFiles/ray_tracer.dir/CXXModules.json	1ab6e5169d62e66a
+4	350	7778457926264617	build.ninja	1aea443985884787
+6	300	7778455766003380	CMakeFiles/ray_tracer.dir/main.cpp.obj.ddi	6ff2a9480a3e1685
+1125	1289	7778455777193382	ray_tracer.exe	35b6d1d193c7b5ee
+337	1125	7778455769313375	CMakeFiles/ray_tracer.dir/main.cpp.obj	c8ae7e46d4165c67
+301	336	7778455768953385	CMakeFiles/ray_tracer.dir/CXX.dd	1ab6e5169d62e66a
+301	336	7778455768953385	C:/Users/Gebruiker/Documents/ray_tracer/cmake-build-debug/CMakeFiles/ray_tracer.dir/CXXModules.json	1ab6e5169d62e66a

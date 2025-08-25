@@ -24,14 +24,22 @@ struct vector3
     vector3 operator-(const vector3& o) const { return {x - o.x, y - o.y, z - o.z}; }
     vector3 operator*(const float t) const { return {x * t, y * t, z * t}; }
     vector3 operator/(const float t) const { return {x / t, y / t, z / t}; }
+    vector3 operator-() const { return {-x, -y, -z}; }
     vector3& operator+=(const vector3& o) { x += o.x; y += o.y; z += o.z; return *this; }
     vector3& operator*=(const float t) { x *= t; y *= t; z *= t; return *this; }
+    vector3 operator%(const vector3& o) const { return cross(*this,o); }
     void normalize() { (*this) = this->normalized(); }
 
 
     [[nodiscard]] float length() const { return std::sqrt(x*x + y*y + z*z); }
     [[nodiscard]] float length_2() const { return x*x + y*y + z*z; } // squared length
     [[nodiscard]] vector3 normalized() const { const float len = length(); return *this / len; }
+
+    [[nodiscard]] vector3 cross(const vector3& b) const
+    {
+        return {y*b.z - z*b.y,z*b.x - x*b.z,x*b.y - y*b.x};
+    }
+
 
 
     static float dot(const vector3& a, const vector3& b) { return a.x*b.x + a.y*b.y + a.z*b.z; }

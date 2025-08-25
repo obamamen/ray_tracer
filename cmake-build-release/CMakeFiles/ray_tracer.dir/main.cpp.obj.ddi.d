@@ -201,4 +201,36 @@ CMakeFiles\ray_tracer.dir\main.cpp.obj.ddi: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/stl_vector.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/stl_bvector.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/vector.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/iostream
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/atomic \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/atomic_base.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/atomic_lockfree_defines.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/atomic_wait.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/std_mutex.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/mutex \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/chrono.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/ratio \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/ctime \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/parse_numbers.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/unique_lock.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/iostream \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/random \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/random.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/x86_64-w64-mingw32/bits/opt_random.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/pmmintrin.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/emmintrin.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/xmmintrin.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/mmintrin.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/mwaitintrin.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/random.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/numeric \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/stl_numeric.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/pstl/glue_numeric_defs.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/thread \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/stop_token \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/std_thread.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/unique_ptr.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/semaphore \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/semaphore_base.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/atomic_timed_wait.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/this_thread_sleep.h \
+ C:/mingw64/x86_64-w64-mingw32/include/semaphore.h
