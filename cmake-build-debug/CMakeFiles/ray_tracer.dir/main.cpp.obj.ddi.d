@@ -160,7 +160,7 @@ CMakeFiles\ray_tracer.dir\main.cpp.obj.ddi: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/x86_64-w64-mingw32/bits/basic_file.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/x86_64-w64-mingw32/bits/c++io.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/fstream.tcc \
- C:/Users/Gebruiker/Documents/ray_tracer/include/rendering/texture.hpp \
+ C:/Users/Gebruiker/Documents/ray_tracer/include/components/rendering/texture.hpp \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/cassert \
  C:/mingw64/x86_64-w64-mingw32/include/assert.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/cmath \
@@ -179,7 +179,7 @@ CMakeFiles\ray_tracer.dir\main.cpp.obj.ddi: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/tr1/poly_hermite.tcc \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/tr1/poly_laguerre.tcc \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/tr1/riemann_zeta.tcc \
- C:/Users/Gebruiker/Documents/ray_tracer/include/rendering/color.hpp \
+ C:/Users/Gebruiker/Documents/ray_tracer/include/components/rendering/color.hpp \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/algorithm \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/stl_algo.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/algorithmfwd.h \
@@ -189,4 +189,10 @@ CMakeFiles\ray_tracer.dir\main.cpp.obj.ddi: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/ranges_algo.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/ranges_algobase.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/pstl/glue_algorithm_defs.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/pstl/execution_defs.h
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/pstl/execution_defs.h \
+ C:/Users/Gebruiker/Documents/ray_tracer/include/systems/image/bmp.hpp \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/vector \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/stl_uninitialized.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/stl_vector.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/stl_bvector.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/vector.tcc

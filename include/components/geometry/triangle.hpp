@@ -9,7 +9,7 @@
 #ifndef RAY_TRACER_TRIANGLE
 #define RAY_TRACER_TRIANGLE
 
-#include "math/vector3.hpp"
+#include "components/math/vector3.hpp"
 
 struct triangle
 {

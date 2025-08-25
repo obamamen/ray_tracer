@@ -17,15 +17,15 @@ struct texture
 {
     int width, height;
     color* pixels;
-
-    // Constructor
+    
     texture(int w, int h, const color& fill = color(0,0,0))
         : width(w), height(h), pixels(new color[w*h])
     {
         for (int i = 0; i < w * h; i++) pixels[i] = fill;
     }
 
-    ~texture() {
+    ~texture()
+    {
         delete[] pixels;
     }
 
@@ -45,7 +45,8 @@ struct texture
         other.pixels = nullptr;
     }
 
-    texture& operator=(const texture& other) {
+    texture& operator=(const texture& other)
+    {
         if (this == &other) return *this;
 
         delete[] pixels;
@@ -60,7 +61,8 @@ struct texture
         return *this;
     }
 
-    texture& operator=(texture&& other) noexcept {
+    texture& operator=(texture&& other) noexcept
+    {
         if (this == &other) return *this;
 
         delete[] pixels;
@@ -76,12 +78,14 @@ struct texture
         return *this;
     }
 
-    [[nodiscard]] inline color& at(const int x, const int y) const {
+    [[nodiscard]] inline color& at(const int x, const int y) const
+    {
         assert(x >= 0 && x < width && y >= 0 && y < height);
         return pixels[y * width + x];
     }
 
-    [[nodiscard]] color sample(float u, float v) const {
+    [[nodiscard]] color sample(float u, float v) const
+    {
         u = u - std::floor(u);
         v = v - std::floor(v);
 

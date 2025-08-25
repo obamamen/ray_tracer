@@ -22,7 +22,8 @@ struct color
     color operator*(const float t) const { return {r * t, g * t, b * t}; }
     color& operator+=(const color& o) { r+=o.r; g+=o.g; b+=o.b; return *this; }
 
-    [[nodiscard]] color clamped(const float min = 0.0f, const float max = 1.0f) const {
+    [[nodiscard]] color clamped(const float min = 0.0f, const float max = 1.0f) const
+    {
         return {
             std::min(std::max(r, min), max),
             std::min(std::max(g, min), max),
@@ -30,8 +31,8 @@ struct color
         };
     }
 
-    [[nodiscard]] float luminance() const {
-        // Perceptual brightness weighting (Rec. 709)
+    [[nodiscard]] float luminance() const
+    {
         return 0.2126f * r + 0.7152f * g + 0.0722f * b;
     }
 };
