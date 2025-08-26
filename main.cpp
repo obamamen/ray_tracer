@@ -55,11 +55,11 @@ bool intersect_triangle(const ray& r, const triangle& tri, float& t_out, vector3
 }
 
 // ----------------------------- path tracer ----------------------------------
-const int max_depth = 8;
+const int max_depth = 14;
 
 color trace_ray(const ray& r, const std::vector<object>& scene, int depth, std::mt19937& rng)
 {
-    if(depth > max_depth) return color(0.1f,0.1f,0.1f);
+    if(depth > max_depth) return color(0,0,0);
 
     float closest_t = 1e30f;
     const material* hit_mat = nullptr;
@@ -140,52 +140,88 @@ color trace_ray(const ray& r, const std::vector<object>& scene, int depth, std::
 // ----------------------------- main -----------------------------------------
 int main()
 {
-    const int width = 512;
-    const int height = 512;
-    const int spp = 128;
+    const int width = 1024;
+    const int height = 1024;
+    const int spp = 64;
 
     texture img(width, height);
     std::vector<object> scene;
 
-    float s = 1;
+    float s = 1.25;
     float d = 8;
 
+    // Room corners
     vector3 p0(-s,-s,-s), p1(s,-s,-s), p2(s,s,-s), p3(-s,s,-s);
     vector3 p4(-s,-s,d), p5(s,-s,d), p6(s,s,d), p7(-s,s,d);
 
+    // Reflectivity
     float main_r = 0.0f;
     float vertical_r = 0;
 
-    color floor_albedo = color(0.9f);
-    float floor_reflectivity = 0;
     // Floor
-    scene.push_back({triangle(p0,p5,p1), material(floor_albedo,floor_reflectivity)});
-    scene.push_back({triangle(p0,p4,p5), material(floor_albedo,floor_reflectivity)});
+    scene.push_back({triangle(p0,p5,p1), material(color(0.6f,0.6f,0.6f),0)});
+    scene.push_back({triangle(p0,p4,p5), material(color(0.6f,0.6f,0.6f),0)});
 
-    // Ceiling
-    scene.push_back({triangle(p3,p2,p6), material(floor_albedo,vertical_r)});
-    scene.push_back({triangle(p3,p6,p7), material(floor_albedo,vertical_r)});
+    // Ceiling light
+    color ceil_light = color(0.8);
+    scene.push_back({triangle(p3,p2,p6), material(color(0.6f),0.01f,ceil_light)});
+    scene.push_back({triangle(p3,p6,p7), material(color(0.6f),0.01f,ceil_light)});
 
     // Left wall
-    scene.push_back({triangle(p4,p3,p7), material(color(0.9f,0.5f,0.4f),main_r)});
-    scene.push_back({triangle(p4,p0,p3), material(color(0.9f,0.5f,0.4f),main_r)});
+    scene.push_back({triangle(p4,p3,p7), material(color(0.9),0.9)});
+    scene.push_back({triangle(p4,p0,p3), material(color(0.9),0.9)});
 
     // Right wall
-    scene.push_back({triangle(p1,p6,p2), material(color(0.4f,0.5f,0.9f),main_r)});
-    scene.push_back({triangle(p1,p5,p6), material(color(0.4f,0.5f,0.9f),main_r)});
+    scene.push_back({triangle(p1,p6,p2), material(color(0.6f,0.6f,0.6f),main_r)});
+    scene.push_back({triangle(p1,p5,p6), material(color(0.6f,0.6f,0.6f),main_r)});
 
-    color back_wall_light = (color){0.75};
     // Back wall
-    scene.push_back({triangle(p0,p2,p3), material(color(0.8f,0.8f,0.8f),0.25,back_wall_light)});
-    scene.push_back({triangle(p0,p1,p2), material(color(0.8f,0.8f,0.8f),0.25,back_wall_light)});
+    scene.push_back({triangle(p0,p2,p3), material(color(0.8f),0)});
+    scene.push_back({triangle(p0,p1,p2), material(color(0.8f),0)});
 
     // Front wall
-    scene.push_back({triangle(p4,p6,p5), material(color(0.8f,0.8f,0.8f),0)});
-    scene.push_back({triangle(p4,p7,p6), material(color(0.8f,0.8f,0.8f),0)});
+    scene.push_back({triangle(p4,p6,p5), material(color(0.8f),0)});
+    scene.push_back({triangle(p4,p7,p6), material(color(0.8f),0)});
+
+    // ---- Add a central pillar ----
+    float pillar_size = 0.4f;
+    vector3 c0(-pillar_size,-pillar_size,2), c1(pillar_size,-pillar_size,2);
+    vector3 c2(pillar_size,pillar_size,2), c3(-pillar_size,pillar_size,2);
+    vector3 c4(-pillar_size,-pillar_size,5), c5(pillar_size,-pillar_size,5);
+    vector3 c6(pillar_size,pillar_size,5), c7(-pillar_size,pillar_size,5);
+
+    color pillar_color = color(0.8,0.8,0.35);
+    color test = color(1.0);
+    color test_light = color(1);
+    float pillar_ref = .0;
+
+    // Bottom face (pointing downward)
+    scene.push_back({triangle(c0,c2,c1), material(pillar_color,pillar_ref)});
+    scene.push_back({triangle(c0,c3,c2), material(pillar_color,pillar_ref)});
+
+    // Top face (pointing upward)
+    scene.push_back({triangle(c4,c5,c6), material(test,1,test_light)});
+    scene.push_back({triangle(c4,c6,c7), material(test,1,test_light)});
+
+    // Front face (toward positive z)
+    scene.push_back({triangle(c0,c5,c4), material(pillar_color,pillar_ref)});
+    scene.push_back({triangle(c0,c1,c5), material(pillar_color,pillar_ref)});
+
+    // Back face (toward negative z)
+    scene.push_back({triangle(c3,c6,c2), material(pillar_color,pillar_ref)});
+    scene.push_back({triangle(c3,c7,c6), material(pillar_color,pillar_ref)});
+
+    // Left face (toward negative x)
+    scene.push_back({triangle(c0,c7,c3), material(pillar_color,pillar_ref)});
+    scene.push_back({triangle(c0,c4,c7), material(pillar_color,pillar_ref)});
+
+    // Right face (toward positive x)
+    scene.push_back({triangle(c1,c6,c5), material(pillar_color,pillar_ref)});
+    scene.push_back({triangle(c1,c2,c6), material(pillar_color,pillar_ref)});
 
 
-    vector3 cam_pos(0,0,1+d);
-    vector3 cam_look(0,0,0);
+    vector3 cam_pos(2*1.15,0,(1+d)*1.35);
+    vector3 cam_look(0,0,d/2);
     vector3 cam_up(0,1,0);
     float aspect = float(width)/height;
     float fov = 0.5f;
@@ -238,14 +274,15 @@ int main()
                     pixel += trace_ray(r, scene, 0, rng);
                 }
                 pixel /= float(spp);
-                pixel *= 0.7f;
-                color display(
-                    std::pow(pixel.r, 1.0f/2.2f),
-                    std::pow(pixel.g, 1.0f/2.2f),
-                    std::pow(pixel.b, 1.0f/2.2f)
-                );
+                //pixel *= 0.8f;
+                // color display(
+                //     std::pow(pixel.r, 1.0f/2.2f),
+                //     std::pow(pixel.g, 1.0f/2.2f),
+                //     std::pow(pixel.b, 1.0f/2.2f)
+                // );
 
-                img.at(x,y) = display.clamped();
+
+                img.at(x,y) = pixel.clamped();
             }
 
             int done = ++rows_done;

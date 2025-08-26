@@ -6,7 +6,7 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"jsonFile" : "directory-.-Release-d0094a50bb2071803777.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.29"
@@ -19,7 +19,7 @@
 					]
 				}
 			],
-			"name" : "Debug",
+			"name" : "Release",
 			"projects" : 
 			[
 				{
@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "ray_tracer::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-ray_tracer-Debug-a67f439302b3509c26d2.json",
+					"jsonFile" : "target-ray_tracer-Release-b43cdb3843ff87e37a9e.json",
 					"name" : "ray_tracer",
 					"projectIndex" : 0
 				}
@@ -49,7 +49,7 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/moosm/CLionProjects/ray_tracer/cmake-build-debug",
+		"build" : "C:/Users/moosm/CLionProjects/ray_tracer/cmake-build-release",
 		"source" : "C:/Users/moosm/CLionProjects/ray_tracer"
 	},
 	"version" : 
