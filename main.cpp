@@ -94,22 +94,41 @@ color trace_ray(const ray& r, const std::vector<object>& scene, int depth, std::
 
     color surface_color;
 
+    // if(refl <= 0.0f)
+    // {
+    //     vector3 diffuse_dir = random_in_hemisphere(hit_normal, rng);
+    //     ray diffuse_ray(hit_pos + hit_normal*1e-4f, diffuse_dir);
+    //     surface_color = emitted + hit_mat->albedo * trace_ray(diffuse_ray, scene, depth+1, rng);
+    // }
+    // else if(randf(rng) < refl)
+    // {
+    //     vector3 refl_dir = r.direction - hit_normal * 2.0f * vector3::dot(r.direction, hit_normal);
+    //     ray refl_ray(hit_pos + hit_normal*1e-4f, refl_dir.normalized());
+    //     surface_color = emitted + hit_mat->albedo * trace_ray(refl_ray, scene, depth+1, rng);
+    // }
+    // else
+    // {
+    //     vector3 diffuse_dir = random_in_hemisphere(hit_normal, rng);
+    //     ray diffuse_ray(hit_pos + hit_normal*1e-4f, diffuse_dir);
+    //     surface_color = emitted + hit_mat->albedo * trace_ray(diffuse_ray, scene, depth+1, rng);
+    // }
+
     if(refl <= 0.0f)
     {
-        vector3 diffuse_dir = random_in_hemisphere(hit_normal, rng);
-        ray diffuse_ray(hit_pos + hit_normal*1e-4f, diffuse_dir);
+        vector3 diffuse_dir = random_cosine_hemisphere(hit_normal, rng);
+        ray diffuse_ray(hit_pos + hit_normal * 1e-4f, diffuse_dir);
         surface_color = emitted + hit_mat->albedo * trace_ray(diffuse_ray, scene, depth+1, rng);
     }
     else if(randf(rng) < refl)
     {
         vector3 refl_dir = r.direction - hit_normal * 2.0f * vector3::dot(r.direction, hit_normal);
-        ray refl_ray(hit_pos + hit_normal*1e-4f, refl_dir.normalized());
+        ray refl_ray(hit_pos + hit_normal * 1e-4f, refl_dir.normalized());
         surface_color = emitted + hit_mat->albedo * trace_ray(refl_ray, scene, depth+1, rng);
     }
     else
     {
-        vector3 diffuse_dir = random_in_hemisphere(hit_normal, rng);
-        ray diffuse_ray(hit_pos + hit_normal*1e-4f, diffuse_dir);
+        vector3 diffuse_dir = random_cosine_hemisphere(hit_normal, rng);
+        ray diffuse_ray(hit_pos + hit_normal * 1e-4f, diffuse_dir);
         surface_color = emitted + hit_mat->albedo * trace_ray(diffuse_ray, scene, depth+1, rng);
     }
 
@@ -121,15 +140,15 @@ color trace_ray(const ray& r, const std::vector<object>& scene, int depth, std::
 // ----------------------------- main -----------------------------------------
 int main()
 {
-    const int width = 1660;
-    const int height = 1660;
-    const int spp = 512;
+    const int width = 512;
+    const int height = 512;
+    const int spp = 128;
 
     texture img(width, height);
     std::vector<object> scene;
 
     float s = 1;
-    float d = 4;
+    float d = 8;
 
     vector3 p0(-s,-s,-s), p1(s,-s,-s), p2(s,s,-s), p3(-s,s,-s);
     vector3 p4(-s,-s,d), p5(s,-s,d), p6(s,s,d), p7(-s,s,d);
@@ -155,7 +174,7 @@ int main()
     scene.push_back({triangle(p1,p6,p2), material(color(0.4f,0.5f,0.9f),main_r)});
     scene.push_back({triangle(p1,p5,p6), material(color(0.4f,0.5f,0.9f),main_r)});
 
-    color back_wall_light = (color){0.85};
+    color back_wall_light = (color){0.75};
     // Back wall
     scene.push_back({triangle(p0,p2,p3), material(color(0.8f,0.8f,0.8f),0.25,back_wall_light)});
     scene.push_back({triangle(p0,p1,p2), material(color(0.8f,0.8f,0.8f),0.25,back_wall_light)});
@@ -185,7 +204,7 @@ int main()
     {
         std::mt19937 rng(start);
 
-        float lens_radius = 0.01f;
+        float lens_radius = 0.0f;
         float focus_dist = 2.0f;
 
         for(int y=start; y<end; y++)
@@ -218,7 +237,15 @@ int main()
                     ray r(origin, dir);
                     pixel += trace_ray(r, scene, 0, rng);
                 }
-                img.at(x,y) = (pixel / float(spp)).clamped();
+                pixel /= float(spp);
+                pixel *= 0.7f;
+                color display(
+                    std::pow(pixel.r, 1.0f/2.2f),
+                    std::pow(pixel.g, 1.0f/2.2f),
+                    std::pow(pixel.b, 1.0f/2.2f)
+                );
+
+                img.at(x,y) = display.clamped();
             }
 
             int done = ++rows_done;
