@@ -49,26 +49,14 @@ cmake_ninja_workdir = C$:/Users/Gebruiker/Documents/ray_tracer/cmake-build-relea
 
 build cmake_object_order_depends_target_ray_tracer: phony || .
 
-build CMakeFiles/ray_tracer.dir/main.cpp.obj.ddi: CXX_SCAN__ray_tracer_Release C$:/Users/Gebruiker/Documents/ray_tracer/main.cpp || cmake_object_order_depends_target_ray_tracer
-  DEP_FILE = CMakeFiles\ray_tracer.dir\main.cpp.obj.ddi.d
-  DYNDEP_INTERMEDIATE_FILE = CMakeFiles\ray_tracer.dir\main.cpp.obj.ddi
-  FLAGS = -O3 -DNDEBUG -std=gnu++20 -fdiagnostics-color=always
-  INCLUDES = -IC:/Users/Gebruiker/Documents/ray_tracer/include
-  OBJ_FILE = CMakeFiles\ray_tracer.dir\main.cpp.obj
-  PREPROCESSED_OUTPUT_FILE = CMakeFiles\ray_tracer.dir\main.cpp.obj.ddi.i
-
-build CMakeFiles/ray_tracer.dir/main.cpp.obj: CXX_COMPILER__ray_tracer_scanned_Release C$:/Users/Gebruiker/Documents/ray_tracer/main.cpp | CMakeFiles/ray_tracer.dir/main.cpp.obj.modmap || cmake_object_order_depends_target_ray_tracer CMakeFiles/ray_tracer.dir/CXX.dd
+build CMakeFiles/ray_tracer.dir/main.cpp.obj: CXX_COMPILER__ray_tracer_unscanned_Release C$:/Users/Gebruiker/Documents/ray_tracer/main.cpp || cmake_object_order_depends_target_ray_tracer
   DEP_FILE = CMakeFiles\ray_tracer.dir\main.cpp.obj.d
-  DYNDEP_MODULE_MAP_FILE = CMakeFiles\ray_tracer.dir\main.cpp.obj.modmap
   FLAGS = -O3 -DNDEBUG -std=gnu++20 -fdiagnostics-color=always
   INCLUDES = -IC:/Users/Gebruiker/Documents/ray_tracer/include
   OBJECT_DIR = CMakeFiles\ray_tracer.dir
   OBJECT_FILE_DIR = CMakeFiles\ray_tracer.dir
   TARGET_COMPILE_PDB = CMakeFiles\ray_tracer.dir\
   TARGET_PDB = ray_tracer.pdb
-  dyndep = CMakeFiles/ray_tracer.dir/CXX.dd
-
-build CMakeFiles/ray_tracer.dir/CXX.dd | C$:/Users/Gebruiker/Documents/ray_tracer/cmake-build-release/CMakeFiles/ray_tracer.dir/CXXModules.json CMakeFiles/ray_tracer.dir/main.cpp.obj.modmap: CXX_DYNDEP__ray_tracer_Release CMakeFiles/ray_tracer.dir/main.cpp.obj.ddi | C$:/Users/Gebruiker/Documents/ray_tracer/cmake-build-release/CMakeFiles/ray_tracer.dir/CXXDependInfo.json
 
 
 # =============================================================================

@@ -55,14 +55,14 @@ bool intersect_triangle(const ray& r, const triangle& tri, float& t_out, vector3
 }
 
 // ----------------------------- path tracer ----------------------------------
-const int max_depth = 14;
+const int max_depth = 32;
 
 color trace_ray(const ray& r, const std::vector<object>& scene, int depth, std::mt19937& rng)
 {
-    if(depth > max_depth) return color(0,0,0);
+    if(depth > max_depth) return color(0.0f,0.0f,0.0f);
 
     float closest_t = 1e30f;
-    const material* hit_mat = nullptr;
+    const object* hit_obj = nullptr;
     vector3 hit_pos, hit_normal;
 
     for(const auto& obj : scene)
@@ -72,83 +72,62 @@ color trace_ray(const ray& r, const std::vector<object>& scene, int depth, std::
         if(intersect_triangle(r, obj.tri, t, n) && t < closest_t)
         {
             closest_t = t;
-            hit_mat = &obj.mat;
+            hit_obj = &obj;
             hit_pos = r.at(t);
             hit_normal = n;
         }
     }
 
-    // Fog parameters
-    const float sigma = 0.0f;
-    const color fog_color(0.6f, 0.75f, 0.8f);
+    if(!hit_obj)
+        return color(0.0f, 0.0f, 0.0f);
 
-    if(!hit_mat)
-    {
-        float t_far = 50.0f;
-        float attenuation = std::exp(-sigma * t_far);
-        return fog_color * (1.0f - attenuation);
-    }
+    const material& mat = hit_obj->mat;
+    color emitted = mat.emission;
+    color f = mat.albedo;
+    float refl = mat.reflectivity;
 
-    color emitted = hit_mat->emission;
-    float refl = hit_mat->reflectivity;
+    vector3 nl = vector3::dot(hit_normal, r.direction) < 0 ? hit_normal : -hit_normal;
 
-    color surface_color;
+    float p = std::max({f.r, f.g, f.b});
+    if(depth > 5 && randf(rng) >= p) return emitted;
+    if(depth > 5) f = f * (1.0f / p);
 
-    // if(refl <= 0.0f)
-    // {
-    //     vector3 diffuse_dir = random_in_hemisphere(hit_normal, rng);
-    //     ray diffuse_ray(hit_pos + hit_normal*1e-4f, diffuse_dir);
-    //     surface_color = emitted + hit_mat->albedo * trace_ray(diffuse_ray, scene, depth+1, rng);
-    // }
-    // else if(randf(rng) < refl)
-    // {
-    //     vector3 refl_dir = r.direction - hit_normal * 2.0f * vector3::dot(r.direction, hit_normal);
-    //     ray refl_ray(hit_pos + hit_normal*1e-4f, refl_dir.normalized());
-    //     surface_color = emitted + hit_mat->albedo * trace_ray(refl_ray, scene, depth+1, rng);
-    // }
-    // else
-    // {
-    //     vector3 diffuse_dir = random_in_hemisphere(hit_normal, rng);
-    //     ray diffuse_ray(hit_pos + hit_normal*1e-4f, diffuse_dir);
-    //     surface_color = emitted + hit_mat->albedo * trace_ray(diffuse_ray, scene, depth+1, rng);
-    // }
+    if(std::max({f.r, f.g, f.b}) < 0.05f)
+        return emitted;
 
     if(refl <= 0.0f)
     {
-        vector3 diffuse_dir = random_cosine_hemisphere(hit_normal, rng);
-        ray diffuse_ray(hit_pos + hit_normal * 1e-4f, diffuse_dir);
-        surface_color = emitted + hit_mat->albedo * trace_ray(diffuse_ray, scene, depth+1, rng);
+        vector3 dir = random_cosine_hemisphere(nl, rng);
+        ray new_ray(hit_pos + nl*1e-4f, dir);
+        return emitted + f * trace_ray(new_ray, scene, depth+1, rng);
     }
     else if(randf(rng) < refl)
     {
-        vector3 refl_dir = r.direction - hit_normal * 2.0f * vector3::dot(r.direction, hit_normal);
-        ray refl_ray(hit_pos + hit_normal * 1e-4f, refl_dir.normalized());
-        surface_color = emitted + hit_mat->albedo * trace_ray(refl_ray, scene, depth+1, rng);
+        vector3 refl_dir = r.direction - nl * 2.0f * vector3::dot(r.direction, nl);
+        ray refl_ray(hit_pos + nl*1e-4f, refl_dir.normalized());
+        return emitted + f * trace_ray(refl_ray, scene, depth+1, rng);
     }
     else
     {
-        vector3 diffuse_dir = random_cosine_hemisphere(hit_normal, rng);
-        ray diffuse_ray(hit_pos + hit_normal * 1e-4f, diffuse_dir);
-        surface_color = emitted + hit_mat->albedo * trace_ray(diffuse_ray, scene, depth+1, rng);
+        vector3 dir = random_cosine_hemisphere(nl, rng);
+        ray diffuse_ray(hit_pos + nl*1e-4f, dir);
+        return emitted + f * trace_ray(diffuse_ray, scene, depth+1, rng);
     }
-
-    float attenuation = std::exp(-sigma * closest_t);
-    return fog_color * (1.0f - attenuation) + surface_color * attenuation;
 }
 
 
 // ----------------------------- main -----------------------------------------
 int main()
 {
-    const int width = 1024;
-    const int height = 1024;
+    const int width = 2560;
+    const int height = 2560;
     const int spp = 64;
 
     texture img(width, height);
     std::vector<object> scene;
 
-    float s = 1.25;
-    float d = 8;
+    float s = 1.32;
+    float d = 10;
 
     // Room corners
     vector3 p0(-s,-s,-s), p1(s,-s,-s), p2(s,s,-s), p3(-s,s,-s);
@@ -164,24 +143,24 @@ int main()
 
     // Ceiling light
     color ceil_light = color(0.8);
-    scene.push_back({triangle(p3,p2,p6), material(color(0.6f),0.01f,ceil_light)});
-    scene.push_back({triangle(p3,p6,p7), material(color(0.6f),0.01f,ceil_light)});
+    scene.push_back({triangle(p3,p2,p6), material(color(0.6f),main_r)});
+    scene.push_back({triangle(p3,p6,p7), material(color(0.6f),main_r)});
 
     // Left wall
-    scene.push_back({triangle(p4,p3,p7), material(color(0.9),0.9)});
-    scene.push_back({triangle(p4,p0,p3), material(color(0.9),0.9)});
+    scene.push_back({triangle(p4,p3,p7), material(color(0.9),main_r)});
+    scene.push_back({triangle(p4,p0,p3), material(color(0.9),main_r)});
 
     // Right wall
-    scene.push_back({triangle(p1,p6,p2), material(color(0.6f,0.6f,0.6f),main_r)});
-    scene.push_back({triangle(p1,p5,p6), material(color(0.6f,0.6f,0.6f),main_r)});
+    scene.push_back({triangle(p1,p6,p2), material(color(0.6),main_r)});
+    scene.push_back({triangle(p1,p5,p6), material(color(0.6),main_r)});
 
     // Back wall
-    scene.push_back({triangle(p0,p2,p3), material(color(0.8f),0)});
-    scene.push_back({triangle(p0,p1,p2), material(color(0.8f),0)});
+    scene.push_back({triangle(p0,p2,p3), material(color(0.6f),1)});
+    scene.push_back({triangle(p0,p1,p2), material(color(0.6f),1)});
 
     // Front wall
-    scene.push_back({triangle(p4,p6,p5), material(color(0.8f),0)});
-    scene.push_back({triangle(p4,p7,p6), material(color(0.8f),0)});
+    scene.push_back({triangle(p4,p6,p5), material(color(0.9f),0)});
+    scene.push_back({triangle(p4,p7,p6), material(color(0.9f),0)});
 
     // ---- Add a central pillar ----
     float pillar_size = 0.4f;
@@ -190,18 +169,18 @@ int main()
     vector3 c4(-pillar_size,-pillar_size,5), c5(pillar_size,-pillar_size,5);
     vector3 c6(pillar_size,pillar_size,5), c7(-pillar_size,pillar_size,5);
 
-    color pillar_color = color(0.8,0.8,0.35);
+    color pillar_color = color(0.8,0.4,0.4);
     color test = color(1.0);
     color test_light = color(1);
     float pillar_ref = .0;
 
     // Bottom face (pointing downward)
-    scene.push_back({triangle(c0,c2,c1), material(pillar_color,pillar_ref)});
-    scene.push_back({triangle(c0,c3,c2), material(pillar_color,pillar_ref)});
+    scene.push_back({triangle(c0,c2,c1), material(pillar_color,pillar_ref,(color){25})});
+    scene.push_back({triangle(c0,c3,c2), material(pillar_color,pillar_ref,(color){25})});
 
     // Top face (pointing upward)
-    scene.push_back({triangle(c4,c5,c6), material(test,1,test_light)});
-    scene.push_back({triangle(c4,c6,c7), material(test,1,test_light)});
+    scene.push_back({triangle(c4,c5,c6), material(pillar_color,pillar_ref)});
+    scene.push_back({triangle(c4,c6,c7), material(pillar_color,pillar_ref)});
 
     // Front face (toward positive z)
     scene.push_back({triangle(c0,c5,c4), material(pillar_color,pillar_ref)});
@@ -220,8 +199,8 @@ int main()
     scene.push_back({triangle(c1,c2,c6), material(pillar_color,pillar_ref)});
 
 
-    vector3 cam_pos(2*1.15,0,(1+d)*1.35);
-    vector3 cam_look(0,0,d/2);
+    vector3 cam_pos(3,0,(1+d)*1.35);
+    vector3 cam_look(0,0,d/1.35);
     vector3 cam_up(0,1,0);
     float aspect = float(width)/height;
     float fov = 0.5f;
