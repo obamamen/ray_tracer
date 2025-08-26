@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\ray_tracer.dir/objects.a
+C:\PROGRA~1\JETBRA~1\CLION2~1.1\bin\mingw\bin\ar.exe qc CMakeFiles\ray_tracer.dir/objects.a @CMakeFiles\ray_tracer.dir\objects1.rsp
+C:\PROGRA~1\JETBRA~1\CLION2~1.1\bin\mingw\bin\G__~1.EXE -g -Wl,--whole-archive CMakeFiles\ray_tracer.dir/objects.a -Wl,--no-whole-archive -o ray_tracer.exe -Wl,--out-implib,libray_tracer.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\ray_tracer.dir\linkLibs.rsp
