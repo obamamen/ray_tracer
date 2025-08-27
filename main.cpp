@@ -56,11 +56,11 @@ bool intersect_triangle(const ray& r, const triangle& tri, float& t_out, vector3
 }
 
 // ----------------------------- path tracer ----------------------------------
-const int max_depth = 32;
+const int max_depth = 20;
 
 color trace_ray(const ray& r, const std::vector<object>& scene, int depth, std::mt19937& rng)
 {
-    if(depth > max_depth) return color(0.0f,0.0f,0.0f);
+    if(depth > max_depth) return color(.0f,.0f,.0f);
 
     float closest_t = 1e30f;
     const object* hit_obj = nullptr;
@@ -80,7 +80,7 @@ color trace_ray(const ray& r, const std::vector<object>& scene, int depth, std::
     }
 
     if(!hit_obj)
-        return color(0.0f, 0.0f, 0.0f);
+        return color(0.1f, 0.1f, 0.1f);
 
     const material& mat = hit_obj->mat;
     color emitted = mat.emission;
@@ -120,14 +120,14 @@ color trace_ray(const ray& r, const std::vector<object>& scene, int depth, std::
 // ----------------------------- main -----------------------------------------
 int main()
 {
-    const int width = 1024;
-    const int height = 1024;
-    const int spp = 128;
+    const int width = 192;
+    const int height = 192;
+    const int spp = 512;
 
     texture img(width, height);
     std::vector<object> scene;
 
-    float s = 1.32;
+    float s = 4;
     float d = 10;
 
     // Room corners
@@ -138,7 +138,7 @@ int main()
     float main_r = 0.0f;
     float vertical_r = 0;
 
-    color mainc = color(0.8);
+    color mainc = color(0.6,0.6,0.2);
 
     // Floor
     scene.push_back({triangle(p0,p5,p1), material(mainc,0)});
@@ -158,24 +158,24 @@ int main()
     scene.push_back({triangle(p1,p5,p6), material(mainc,main_r)});
 
     // Back wall
-    scene.push_back({triangle(p0,p2,p3), material(mainc,0.8)});
-    scene.push_back({triangle(p0,p1,p2), material(mainc,0.8)});
+    scene.push_back({triangle(p0,p2,p3), material(mainc,1)});
+    scene.push_back({triangle(p0,p1,p2), material(mainc,1)});
 
     // Front wall
-    scene.push_back({triangle(p4,p6,p5), material(mainc,0)});
-    scene.push_back({triangle(p4,p7,p6), material(mainc,0)});
+    scene.push_back({triangle(p4,p6,p5), material(mainc,1)});
+    scene.push_back({triangle(p4,p7,p6), material(mainc,1)});
 
     // ---- Add a central pillar ----
-    float pillar_size = 0.4f;
+    float pillar_size = 1.2f;
     vector3 c0(-pillar_size,-pillar_size,2), c1(pillar_size,-pillar_size,2);
     vector3 c2(pillar_size,pillar_size,2), c3(-pillar_size,pillar_size,2);
-    vector3 c4(-pillar_size,-pillar_size,5), c5(pillar_size,-pillar_size,5);
-    vector3 c6(pillar_size,pillar_size,5), c7(-pillar_size,pillar_size,5);
+    vector3 c4(-pillar_size,-pillar_size,4), c5(pillar_size,-pillar_size,4);
+    vector3 c6(pillar_size,pillar_size,4), c7(-pillar_size,pillar_size,4);
 
     color pillar_color = color(1);
     color test = color(1.0);
     color test_light = color(1);
-    float pillar_ref = 1;
+    float pillar_ref = 0;
 
     // Bottom face (pointing downward)
     scene.push_back({triangle(c0,c2,c1), material(pillar_color,pillar_ref,pillar_color)});
@@ -219,12 +219,12 @@ int main()
     vector3 up      = vector3::cross(right, forward).normalized();
 
     // Multithreading
-    const int n_threads = (int)std::thread::hardware_concurrency();
+    const int n_threads = static_cast<int>(std::thread::hardware_concurrency());
     std::vector<std::thread> threads;
     std::atomic<int> rows_done(0);
     std::mutex print_mutex;
 
-    auto render_rows = [&](int start, int end)
+    auto render_rows = [&](const int start, const int end)
     {
         std::mt19937 rng(start);
 
@@ -235,8 +235,8 @@ int main()
                 color pixel(0,0,0);
                 for(int s_i=0; s_i<spp; s_i++)
                 {
-                    float u = (x + randf(rng)) / float(width);
-                    float v = (y + randf(rng)) / float(height);
+                    float u = (x + randf(rng)) / static_cast<float>(width);
+                    float v = (y + randf(rng)) / static_cast<float>(height);
                     pixel += trace_ray(cam.generate_ray(u,v,rng), scene, 0, rng);
                 }
                 pixel /= float(spp);
@@ -253,11 +253,12 @@ int main()
             }
 
             int done = ++rows_done;
-            if (done % 1 == 0) {
-                std::lock_guard<std::mutex> lock(print_mutex);
-                std::cerr << "\r                                                                      ";
-                std::cerr << "\rRendering: " << 100.0 * done / height << "%" << std::flush;
-            }
+            // if (done % 1 == 0) {
+            //     std::lock_guard<std::mutex> lock(print_mutex);
+            //     std::cerr << "\r                                                                      ";
+            //     std::cerr << "\rRendering: " << 100.0 * done / height << "%" << std::flush;
+            //     bmp::texture_to_bmp(img,"cube_pathtrace_final?.bmp");
+            // }
         }
     };
 
@@ -268,6 +269,15 @@ int main()
         int end = (t == n_threads-1) ? height : start + rows_per_thread;
         threads.emplace_back(render_rows, start, end);
     }
+
+
+    while(rows_done < height)
+    {
+        int done = rows_done.load();
+        std::cerr << "\rRendering: " << 100.0 * done / height << "%" << std::flush;
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+
 
     for(auto& th : threads) th.join();
 

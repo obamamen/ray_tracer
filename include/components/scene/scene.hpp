@@ -12,6 +12,13 @@
 
 #include "components/scene/object.hpp"
 
+struct environment
+{
+    color fog_color = color(0, 0, 0);
+    float fog_density = 0.01;
+    color sky_color = color(0.1, 0.1, 0.2);
+};
+
 struct scene
 {
     private:
