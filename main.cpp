@@ -4,8 +4,7 @@
 #include "components/rendering/color.hpp"
 #include "components/rendering/material.hpp"
 #include "components/rendering/texture.hpp"
-#include "components/math/random.hpp"
-
+#include "systems/math/random.hpp"
 #include "systems/image/bmp.hpp"
 
 
@@ -17,6 +16,8 @@
 #include <iostream>
 #include <random>
 #include <thread>
+
+#include "components/rendering/camera.hpp"
 
 // ----------------------------- helpers --------------------------------------
 struct object
@@ -89,8 +90,8 @@ color trace_ray(const ray& r, const std::vector<object>& scene, int depth, std::
     vector3 nl = vector3::dot(hit_normal, r.direction) < 0 ? hit_normal : -hit_normal;
 
     float p = std::max({f.r, f.g, f.b});
-    if(depth > 5 && randf(rng) >= p) return emitted;
-    if(depth > 5) f = f * (1.0f / p);
+    if(depth > 4 && randf(rng) >= p) return emitted;
+    if(depth > 4) f = f * (1.0f / p);
 
     if(std::max({f.r, f.g, f.b}) < 0.05f)
         return emitted;
@@ -119,9 +120,9 @@ color trace_ray(const ray& r, const std::vector<object>& scene, int depth, std::
 // ----------------------------- main -----------------------------------------
 int main()
 {
-    const int width = 2560;
-    const int height = 2560;
-    const int spp = 64;
+    const int width = 1024;
+    const int height = 1024;
+    const int spp = 128;
 
     texture img(width, height);
     std::vector<object> scene;
@@ -137,30 +138,32 @@ int main()
     float main_r = 0.0f;
     float vertical_r = 0;
 
+    color mainc = color(0.8);
+
     // Floor
-    scene.push_back({triangle(p0,p5,p1), material(color(0.6f,0.6f,0.6f),0)});
-    scene.push_back({triangle(p0,p4,p5), material(color(0.6f,0.6f,0.6f),0)});
+    scene.push_back({triangle(p0,p5,p1), material(mainc,0)});
+    scene.push_back({triangle(p0,p4,p5), material(mainc,0)});
 
     // Ceiling light
     color ceil_light = color(0.8);
-    scene.push_back({triangle(p3,p2,p6), material(color(0.6f),main_r)});
-    scene.push_back({triangle(p3,p6,p7), material(color(0.6f),main_r)});
+    scene.push_back({triangle(p3,p2,p6), material(mainc,main_r)});
+    scene.push_back({triangle(p3,p6,p7), material(mainc,main_r)});
 
     // Left wall
-    scene.push_back({triangle(p4,p3,p7), material(color(0.9),main_r)});
-    scene.push_back({triangle(p4,p0,p3), material(color(0.9),main_r)});
+    scene.push_back({triangle(p4,p3,p7), material(mainc,main_r)});
+    scene.push_back({triangle(p4,p0,p3), material(mainc,main_r)});
 
     // Right wall
-    scene.push_back({triangle(p1,p6,p2), material(color(0.6),main_r)});
-    scene.push_back({triangle(p1,p5,p6), material(color(0.6),main_r)});
+    scene.push_back({triangle(p1,p6,p2), material(mainc,main_r)});
+    scene.push_back({triangle(p1,p5,p6), material(mainc,main_r)});
 
     // Back wall
-    scene.push_back({triangle(p0,p2,p3), material(color(0.6f),1)});
-    scene.push_back({triangle(p0,p1,p2), material(color(0.6f),1)});
+    scene.push_back({triangle(p0,p2,p3), material(mainc,0.8)});
+    scene.push_back({triangle(p0,p1,p2), material(mainc,0.8)});
 
     // Front wall
-    scene.push_back({triangle(p4,p6,p5), material(color(0.9f),0)});
-    scene.push_back({triangle(p4,p7,p6), material(color(0.9f),0)});
+    scene.push_back({triangle(p4,p6,p5), material(mainc,0)});
+    scene.push_back({triangle(p4,p7,p6), material(mainc,0)});
 
     // ---- Add a central pillar ----
     float pillar_size = 0.4f;
@@ -169,34 +172,35 @@ int main()
     vector3 c4(-pillar_size,-pillar_size,5), c5(pillar_size,-pillar_size,5);
     vector3 c6(pillar_size,pillar_size,5), c7(-pillar_size,pillar_size,5);
 
-    color pillar_color = color(0.8,0.4,0.4);
+    color pillar_color = color(1);
     color test = color(1.0);
     color test_light = color(1);
-    float pillar_ref = .0;
+    float pillar_ref = 1;
 
     // Bottom face (pointing downward)
-    scene.push_back({triangle(c0,c2,c1), material(pillar_color,pillar_ref,(color){25})});
-    scene.push_back({triangle(c0,c3,c2), material(pillar_color,pillar_ref,(color){25})});
+    scene.push_back({triangle(c0,c2,c1), material(pillar_color,pillar_ref,pillar_color)});
+    scene.push_back({triangle(c0,c3,c2), material(pillar_color,pillar_ref,pillar_color)});
 
     // Top face (pointing upward)
-    scene.push_back({triangle(c4,c5,c6), material(pillar_color,pillar_ref)});
-    scene.push_back({triangle(c4,c6,c7), material(pillar_color,pillar_ref)});
+    scene.push_back({triangle(c4,c5,c6), material(pillar_color,pillar_ref,pillar_color)});
+    scene.push_back({triangle(c4,c6,c7), material(pillar_color,pillar_ref,pillar_color)});
 
     // Front face (toward positive z)
-    scene.push_back({triangle(c0,c5,c4), material(pillar_color,pillar_ref)});
-    scene.push_back({triangle(c0,c1,c5), material(pillar_color,pillar_ref)});
+    scene.push_back({triangle(c0,c5,c4), material(pillar_color,pillar_ref,pillar_color)});
+    scene.push_back({triangle(c0,c1,c5), material(pillar_color,pillar_ref,pillar_color)});
 
     // Back face (toward negative z)
-    scene.push_back({triangle(c3,c6,c2), material(pillar_color,pillar_ref)});
-    scene.push_back({triangle(c3,c7,c6), material(pillar_color,pillar_ref)});
+    scene.push_back({triangle(c3,c6,c2), material(pillar_color,pillar_ref,pillar_color)});
+    scene.push_back({triangle(c3,c7,c6), material(pillar_color,pillar_ref,pillar_color)});
 
     // Left face (toward negative x)
-    scene.push_back({triangle(c0,c7,c3), material(pillar_color,pillar_ref)});
-    scene.push_back({triangle(c0,c4,c7), material(pillar_color,pillar_ref)});
+    scene.push_back({triangle(c0,c7,c3), material(pillar_color,pillar_ref,pillar_color)});
+    scene.push_back({triangle(c0,c4,c7), material(pillar_color,pillar_ref,pillar_color)});
 
     // Right face (toward positive x)
-    scene.push_back({triangle(c1,c6,c5), material(pillar_color,pillar_ref)});
-    scene.push_back({triangle(c1,c2,c6), material(pillar_color,pillar_ref)});
+    scene.push_back({triangle(c1,c6,c5), material(pillar_color,pillar_ref,pillar_color)});
+    scene.push_back({triangle(c1,c2,c6), material(pillar_color,pillar_ref,pillar_color)});
+
 
 
     vector3 cam_pos(3,0,(1+d)*1.35);
@@ -204,6 +208,11 @@ int main()
     vector3 cam_up(0,1,0);
     float aspect = float(width)/height;
     float fov = 0.5f;
+
+    camera cam = camera(cam_pos, cam_look, cam_up,fov,aspect);
+    cam.focus_dist = 20;
+    cam.lens_radius = 0.001f;
+
 
     vector3 forward = (cam_look - cam_pos).normalized();
     vector3 right   = vector3::cross(forward, cam_up).normalized();
@@ -219,9 +228,6 @@ int main()
     {
         std::mt19937 rng(start);
 
-        float lens_radius = 0.0f;
-        float focus_dist = 2.0f;
-
         for(int y=start; y<end; y++)
         {
             for(int x=0; x<width; x++)
@@ -229,30 +235,12 @@ int main()
                 color pixel(0,0,0);
                 for(int s_i=0; s_i<spp; s_i++)
                 {
-                    // Generate normalized pixel coordinates
-                    float u = ((x + randf(rng)) / width * 2 - 1) * fov * aspect;
-                    float v = (1 - (y + randf(rng)) / height * 2) * fov;
-
-                    // --- Depth of Field ---
-                    // Sample point on lens disk
-                    float r1 = sqrt(randf(rng));
-                    float r2 = 2.0f * M_PI * randf(rng);
-                    float dx = r1 * cos(r2) * lens_radius;
-                    float dy = r1 * sin(r2) * lens_radius;
-
-                    // Offset camera origin
-                    vector3 origin = cam_pos + right * dx + up * dy;
-
-                    // Compute focal point on focal plane
-                    vector3 focal_point = cam_pos + (forward + right * u + up * v).normalized() * focus_dist;
-
-                    // New ray direction through focal point
-                    vector3 dir = (focal_point - origin).normalized();
-
-                    ray r(origin, dir);
-                    pixel += trace_ray(r, scene, 0, rng);
+                    float u = (x + randf(rng)) / float(width);
+                    float v = (y + randf(rng)) / float(height);
+                    pixel += trace_ray(cam.generate_ray(u,v,rng), scene, 0, rng);
                 }
                 pixel /= float(spp);
+
                 //pixel *= 0.8f;
                 // color display(
                 //     std::pow(pixel.r, 1.0f/2.2f),
