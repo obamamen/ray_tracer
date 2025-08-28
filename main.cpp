@@ -68,9 +68,8 @@ color trace_ray(const ray& r, const std::vector<object>& scene, int depth)
 
     for(const auto& obj : scene)
     {
-        float t;
         vector3 n;
-        if(intersect_triangle(r, obj.tri, t, n) && t < closest_t)
+        if(float t; intersect_triangle(r, obj.tri, t, n) && t < closest_t)
         {
             closest_t = t;
             hit_obj = &obj;
@@ -239,25 +238,16 @@ int main()
                     pixel += trace_ray(cam.generate_ray(u,v), scene, 0 );
                 }
                 pixel /= float(spp);
-
                 //pixel *= 0.8f;
                 // color display(
                 //     std::pow(pixel.r, 1.0f/2.2f),
                 //     std::pow(pixel.g, 1.0f/2.2f),
                 //     std::pow(pixel.b, 1.0f/2.2f)
                 // );
-
-
                 img.at(x,y) = pixel.clamped();
             }
 
             int done = ++rows_done;
-            // if (done % 1 == 0) {
-            //     std::lock_guard<std::mutex> lock(print_mutex);
-            //     std::cerr << "\r                                                                      ";
-            //     std::cerr << "\rRendering: " << 100.0 * done / height << "%" << std::flush;
-            //     bmp::texture_to_bmp(img,"cube_pathtrace_final?.bmp");
-            // }
         }
     };
 

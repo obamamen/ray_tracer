@@ -10,13 +10,18 @@
 #define RAY_TRACER_OBJECT
 #include <variant>
 
-#include "components/geometry/geometry_shape.hpp"
+#include "components/geometry/triangle.hpp"
+#include "components/geometry/sphere.hpp"
 #include "components/rendering/material.hpp"
 
 struct object
 {
-    std::variant<triangle_shape,mesh_shape,sphere_shape> shape;
-    material *material = nullptr;
+    std::variant<triangle,sphere> shape;
+    material mat;
+
+    template <typename Shape>
+    explicit object(Shape&& s, const material m)
+        : shape(std::forward<Shape>(s)), mat(m) {}
 };
 
 #endif //RAY_TRACER_OBJECT

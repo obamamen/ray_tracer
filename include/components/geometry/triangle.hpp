@@ -33,14 +33,14 @@ struct triangle
         return 0.5f * vector3::cross(v1-v0, v2-v0).length();
     }
 
-    [[nodiscard]] bool contains_point(const vector3& p) const
-    {
-        const vector3 n = normal();
-        const vector3 c0 = vector3::cross(v1-v0, p-v0);
-        const vector3 c1 = vector3::cross(v2-v1, p-v1);
-        const vector3 c2 = vector3::cross(v0-v2, p-v2);
-        return vector3::dot(n, c0)>=0 && vector3::dot(n, c1)>=0 && vector3::dot(n, c2)>=0;
-    }
+    // [[nodiscard]] bool contains_point(const vector3& p) const
+    // {
+    //     const vector3 n = normal();
+    //     const vector3 c0 = vector3::cross(v1-v0, p-v0);
+    //     const vector3 c1 = vector3::cross(v2-v1, p-v1);
+    //     const vector3 c2 = vector3::cross(v0-v2, p-v2);
+    //     return vector3::dot(n, c0)>=0 && vector3::dot(n, c1)>=0 && vector3::dot(n, c2)>=0;
+    // }
 };
 
 #endif // RAY_TRACER_TRIANGLE

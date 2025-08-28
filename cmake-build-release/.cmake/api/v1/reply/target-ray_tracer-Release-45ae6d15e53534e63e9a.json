@@ -123,7 +123,10 @@
 				11,
 				12,
 				13,
-				14
+				14,
+				15,
+				16,
+				17
 			]
 		}
 	],
@@ -142,12 +145,17 @@
 		},
 		{
 			"backtrace" : 1,
+			"path" : "include/components/geometry/sphere.hpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
 			"path" : "include/components/geometry/triangle.hpp",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "include/components/math/random.hpp",
+			"path" : "include/components/math/intersection.hpp",
 			"sourceGroupIndex" : 1
 		},
 		{
@@ -202,7 +210,17 @@
 		},
 		{
 			"backtrace" : 1,
+			"path" : "include/systems/math/intersection.hpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
 			"path" : "include/systems/math/random.hpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/systems/rendering/main_renderer.hpp",
 			"sourceGroupIndex" : 1
 		}
 	],
