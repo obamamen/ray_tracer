@@ -58,7 +58,7 @@ bool intersect_triangle(const ray& r, const triangle& tri, float& t_out, vector3
 // ----------------------------- path tracer ----------------------------------
 const int max_depth = 20;
 
-color trace_ray(const ray& r, const std::vector<object>& scene, int depth, std::mt19937& rng)
+color trace_ray(const ray& r, const std::vector<object>& scene, int depth)
 {
     if(depth > max_depth) return color(.0f,.0f,.0f);
 
@@ -90,7 +90,7 @@ color trace_ray(const ray& r, const std::vector<object>& scene, int depth, std::
     vector3 nl = vector3::dot(hit_normal, r.direction) < 0 ? hit_normal : -hit_normal;
 
     float p = std::max({f.r, f.g, f.b});
-    if(depth > 4 && randf(rng) >= p) return emitted;
+    if(depth > 4 && randf() >= p) return emitted;
     if(depth > 4) f = f * (1.0f / p);
 
     if(std::max({f.r, f.g, f.b}) < 0.05f)
@@ -98,21 +98,20 @@ color trace_ray(const ray& r, const std::vector<object>& scene, int depth, std::
 
     if(refl <= 0.0f)
     {
-        vector3 dir = random_cosine_hemisphere(nl, rng);
+        vector3 dir = random_cosine_hemisphere(nl);
         ray new_ray(hit_pos + nl*1e-4f, dir);
-        return emitted + f * trace_ray(new_ray, scene, depth+1, rng);
+        return emitted + f * trace_ray(new_ray, scene, depth+1);
     }
-    else if(randf(rng) < refl)
+    if(randf() < refl)
     {
         vector3 refl_dir = r.direction - nl * 2.0f * vector3::dot(r.direction, nl);
         ray refl_ray(hit_pos + nl*1e-4f, refl_dir.normalized());
-        return emitted + f * trace_ray(refl_ray, scene, depth+1, rng);
+        return emitted + f * trace_ray(refl_ray, scene, depth+1);
     }
-    else
     {
-        vector3 dir = random_cosine_hemisphere(nl, rng);
+        vector3 dir = random_cosine_hemisphere(nl);
         ray diffuse_ray(hit_pos + nl*1e-4f, dir);
-        return emitted + f * trace_ray(diffuse_ray, scene, depth+1, rng);
+        return emitted + f * trace_ray(diffuse_ray, scene, depth+1);
     }
 }
 
@@ -226,7 +225,7 @@ int main()
 
     auto render_rows = [&](const int start, const int end)
     {
-        std::mt19937 rng(start);
+        random::set_seed(start);
 
         for(int y=start; y<end; y++)
         {
@@ -235,9 +234,9 @@ int main()
                 color pixel(0,0,0);
                 for(int s_i=0; s_i<spp; s_i++)
                 {
-                    float u = (x + randf(rng)) / static_cast<float>(width);
-                    float v = (y + randf(rng)) / static_cast<float>(height);
-                    pixel += trace_ray(cam.generate_ray(u,v,rng), scene, 0, rng);
+                    float u = (x + randf()) / static_cast<float>(width);
+                    float v = (y + randf()) / static_cast<float>(height);
+                    pixel += trace_ray(cam.generate_ray(u,v), scene, 0 );
                 }
                 pixel /= float(spp);
 

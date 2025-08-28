@@ -14,7 +14,13 @@
 
 #include "components/math/vector3.hpp"
 
-inline float randf(std::mt19937& rng) { return std::uniform_real_distribution<float>(0.0f,1.0f)(rng); }
+struct random
+{
+    static inline thread_local std::mt19937 generator;
+    static inline thread_local void set_seed(const uint64_t seed) { generator.seed(seed); }
+};
+
+inline float randf() { return std::uniform_real_distribution<float>(0.0f,1.0f)(random::generator); }
 
 inline vector3 random_in_hemisphere(const vector3& normal, std::mt19937& rng)
 {
@@ -23,11 +29,11 @@ inline vector3 random_in_hemisphere(const vector3& normal, std::mt19937& rng)
     return dir;
 }
 
-inline vector3 random_in_cone(const vector3& dir, float max_angle, std::mt19937& rng)
+inline vector3 random_in_cone(const vector3& dir, float max_angle)
 {
-    float cos_theta = 1.0f - randf(rng) * (1.0f - std::cos(max_angle));
+    float cos_theta = 1.0f - randf() * (1.0f - std::cos(max_angle));
     float sin_theta = std::sqrt(1.0f - cos_theta*cos_theta);
-    float phi = 2.0f * M_PI * randf(rng);
+    float phi = 2.0f * M_PI * randf();
 
     vector3 w = dir.normalized();
     vector3 u = vector3::cross((std::fabs(w.x) > 0.1f ? vector3(0,1,0) : vector3(1,0,0)), w).normalized();
@@ -39,10 +45,10 @@ inline vector3 random_in_cone(const vector3& dir, float max_angle, std::mt19937&
     return sample.normalized();
 }
 
-inline vector3 random_cosine_hemisphere(const vector3& normal, std::mt19937& rng)
+inline vector3 random_cosine_hemisphere(const vector3& normal)
 {
-    float r1 = randf(rng);
-    float r2 = randf(rng);
+    float r1 = randf();
+    float r2 = randf();
 
     float phi = 2.0f * M_PI * r1;
     float cos_theta = std::sqrt(1.0f - r2);

@@ -34,7 +34,7 @@ struct camera
         up      = vector3::cross(right, forward).normalized();
     }
 
-    ray generate_ray(const float u, const float v, std::mt19937& rng) const
+    ray generate_ray(const float u, const float v) const
     {
         float px = (2.0f * u - 1.0f) * fov * aspect;
         float py = (1.0f - 2.0f * v) * fov;
@@ -42,8 +42,8 @@ struct camera
 
         if(lens_radius > 0.0f)
         {
-            float r1 = sqrt(randf(rng));
-            float r2 = 2.0f * M_PI * randf(rng);
+            float r1 = sqrt(randf());
+            float r2 = 2.0f * M_PI * randf();
             float dx = r1 * cos(r2) * lens_radius;
             float dy = r1 * sin(r2) * lens_radius;
 
