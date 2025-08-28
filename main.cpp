@@ -20,7 +20,7 @@
 #include "components/rendering/camera.hpp"
 
 // ----------------------------- helpers --------------------------------------
-struct object
+struct old_object
 {
     triangle tri;
     material mat;
@@ -58,12 +58,12 @@ bool intersect_triangle(const ray& r, const triangle& tri, float& t_out, vector3
 // ----------------------------- path tracer ----------------------------------
 const int max_depth = 20;
 
-color trace_ray(const ray& r, const std::vector<object>& scene, int depth)
+color trace_ray(const ray& r, const std::vector<old_object>& scene, int depth)
 {
     if(depth > max_depth) return color(.0f,.0f,.0f);
 
     float closest_t = 1e30f;
-    const object* hit_obj = nullptr;
+    const old_object* hit_obj = nullptr;
     vector3 hit_pos, hit_normal;
 
     for(const auto& obj : scene)
@@ -123,7 +123,7 @@ int main()
     const int spp = 512;
 
     texture img(width, height);
-    std::vector<object> scene;
+    std::vector<old_object> scene;
 
     float s = 4;
     float d = 10;

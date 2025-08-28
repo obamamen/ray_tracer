@@ -49,7 +49,7 @@ public:
         return objects.data();
     }
 
-    [[nodiscard]] std::span<object> get_all_objects()
+    [[nodiscard]] std::span<old_object> get_all_objects()
     {
         return {objects};
     }
