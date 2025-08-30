@@ -41,7 +41,6 @@ struct vector3
     }
 
 
-
     static float dot(const vector3& a, const vector3& b) { return a.x*b.x + a.y*b.y + a.z*b.z; }
     static vector3 cross(const vector3& a, const vector3& b)
     {

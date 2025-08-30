@@ -18,7 +18,7 @@ struct ray
 
 
     ray() = default;
-    ray(const vector3& o, const vector3& d) : origin(o), direction(d) {}
+    ray(const vector3& o, const vector3& d) : origin(o), direction(d.normalized()) {}
 
 
     [[nodiscard]] vector3 at(const float t) const { return origin + direction * t; }
