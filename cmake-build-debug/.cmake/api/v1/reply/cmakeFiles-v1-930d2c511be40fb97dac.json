@@ -6,7 +6,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "cmake-build-release/CMakeFiles/3.29.6/CMakeSystem.cmake"
+			"path" : "cmake-build-debug/CMakeFiles/3.29.6/CMakeSystem.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -20,11 +20,11 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "cmake-build-release/CMakeFiles/3.29.6/CMakeCCompiler.cmake"
+			"path" : "cmake-build-debug/CMakeFiles/3.29.6/CMakeCCompiler.cmake"
 		},
 		{
 			"isGenerated" : true,
-			"path" : "cmake-build-release/CMakeFiles/3.29.6/CMakeCXXCompiler.cmake"
+			"path" : "cmake-build-debug/CMakeFiles/3.29.6/CMakeCXXCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -88,7 +88,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "cmake-build-release/CMakeFiles/3.29.6/CMakeRCCompiler.cmake"
+			"path" : "cmake-build-debug/CMakeFiles/3.29.6/CMakeRCCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -154,8 +154,8 @@
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "C:/Users/Gebruiker/Documents/ray_tracer/cmake-build-release",
-		"source" : "C:/Users/Gebruiker/Documents/ray_tracer"
+		"build" : "C:/Users/moosm/CLionProjects/ray_tracer__new/cmake-build-debug",
+		"source" : "C:/Users/moosm/CLionProjects/ray_tracer__new"
 	},
 	"version" : 
 	{

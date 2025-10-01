@@ -17,12 +17,12 @@ enum class debug
 
 struct render_settings
 {
-    debug debug = debug::depth;
+    debug debug = debug::normal;
     bool multithreaded = true;
     bool cosine_hemisphere = true;
 
-    int ssp = 10;
-    int max_bounces = 10;
+    int ssp = 16;
+    int max_bounces = 16;
     static render_settings global_settings;
 };
 

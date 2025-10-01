@@ -98,8 +98,7 @@ int main()
 
     camera cam = camera(cam_pos, cam_look, cam_up,fov,aspect);
     cam.focus_dist = cam_pos.length();
-    cam.lens_radius = 1;
-
+    cam.lens_radius = 0;
 
 
     // Multithreading
@@ -142,7 +141,7 @@ int main()
     };
 
     using clock = std::chrono::high_resolution_clock;
-    auto start_time = clock::now();   // ⏱️ start timer
+    auto start_time = clock::now();
 
     int rows_per_thread = height / n_threads;
     for(int t=0; t<n_threads; t++)
@@ -162,15 +161,15 @@ int main()
 
     for(auto& th : threads) th.join();
 
-    auto end_time = clock::now();     // ⏱️ stop timer
+    auto end_time = clock::now();
     std::chrono::duration<double> elapsed = end_time - start_time;
 
     int total_seconds = static_cast<int>(elapsed.count());
     int minutes = total_seconds / 60;
     int seconds = total_seconds % 60;
 
-    bmp::texture_to_bmp(img,"cube_pathtrace_final.bmp");
-    std::cout << "\nDone. Image saved as cube_pathtrace_final.bmp\n";
+    bmp::texture_to_bmp(img,"cube_pathtrace_final_normal.bmp");
+    std::cout << "\nDone. Image saved as cube_pathtrace_final_blur.bmp\n";
     std::cout << "Render time: "
               << minutes << "m "
               << std::setw(2) << std::setfill('0') << seconds << "s\n";

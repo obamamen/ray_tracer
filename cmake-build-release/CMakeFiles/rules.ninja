@@ -17,7 +17,7 @@
 rule CXX_COMPILER__ray_tracer_unscanned_Release
   depfile = $DEP_FILE
   deps = gcc
-  command = ${LAUNCHER}${CODE_CHECK}"C:\PROGRA~1\JetBrains\CLion 2024.2.1\bin\mingw\bin\g++.exe" $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ${LAUNCHER}${CODE_CHECK}C:\PROGRA~1\JETBRA~1\CLION2~1.1\bin\mingw\bin\G__~1.EXE $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building CXX object $out
 
 
@@ -25,7 +25,7 @@ rule CXX_COMPILER__ray_tracer_unscanned_Release
 # Rule for linking CXX executable.
 
 rule CXX_EXECUTABLE_LINKER__ray_tracer_Release
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && "C:\PROGRA~1\JetBrains\CLion 2024.2.1\bin\mingw\bin\g++.exe" $FLAGS $LINK_FLAGS $in -o $TARGET_FILE -Wl,--out-implib,$TARGET_IMPLIB -Wl,--major-image-version,0,--minor-image-version,0 $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\PROGRA~1\JETBRA~1\CLION2~1.1\bin\mingw\bin\G__~1.EXE $FLAGS $LINK_FLAGS $in -o $TARGET_FILE -Wl,--out-implib,$TARGET_IMPLIB -Wl,--major-image-version,0,--minor-image-version,0 $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
   description = Linking CXX executable $TARGET_FILE
   restat = $RESTAT
 
@@ -42,7 +42,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = "C:\Program Files\JetBrains\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" --regenerate-during-build -SC:\Users\Gebruiker\Documents\ray_tracer -BC:\Users\Gebruiker\Documents\ray_tracer\cmake-build-release
+  command = "C:\Program Files\JetBrains\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" --regenerate-during-build -SC:\Users\moosm\CLionProjects\ray_tracer__new -BC:\Users\moosm\CLionProjects\ray_tracer__new\cmake-build-release
   description = Re-running CMake...
   generator = 1
 
