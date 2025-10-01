@@ -13,7 +13,7 @@
 ![cube_pathtrace_final_blur.bmp](cmake-build-release%2Fcube_pathtrace_final_blur.bmp)
 
 ### Normal DOF
-![cube_pathtrace_final_normal.bmp](cmake-build-debug%2Fcube_pathtrace_final_normal.bmp)
+![cube_pathtrace_final_normal_dof.bmp](cmake-build-debug%2Fcube_pathtrace_final_normal_dof.bmp)
 
 ## Debug renders
 ### Depth mask

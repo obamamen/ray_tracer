@@ -98,7 +98,7 @@ int main()
 
     camera cam = camera(cam_pos, cam_look, cam_up,fov,aspect);
     cam.focus_dist = cam_pos.length();
-    cam.lens_radius = 0;
+    cam.lens_radius = 1;
 
 
     // Multithreading
@@ -168,7 +168,7 @@ int main()
     int minutes = total_seconds / 60;
     int seconds = total_seconds % 60;
 
-    bmp::texture_to_bmp(img,"cube_pathtrace_final_normal.bmp");
+    bmp::texture_to_bmp(img,"cube_pathtrace_final_normal_dof.bmp");
     std::cout << "\nDone. Image saved as cube_pathtrace_final_blur.bmp\n";
     std::cout << "Render time: "
               << minutes << "m "

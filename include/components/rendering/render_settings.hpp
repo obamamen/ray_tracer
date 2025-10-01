@@ -21,7 +21,7 @@ struct render_settings
     bool multithreaded = true;
     bool cosine_hemisphere = true;
 
-    int ssp = 16;
+    int ssp = 64;
     int max_bounces = 16;
     static render_settings global_settings;
 };
