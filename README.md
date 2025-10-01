@@ -1,1 +1,5 @@
-![1](cmake-build-release/cube_pathtrace_final1024_1024_24.bmp)
+![...](cmake-build-release/cube_pathtrace_final1024_1024_24.bmp)
+![...](cmake-build-release/cube_pathtrace_final1024x1024x64.bmp)
+![...](cmake-build-release/cube_pathtrace_final_2560_4092_64.bmp)
+![...](cmake-build-release/cube_pathtrace_final_woowie.bmp)
+![...](cmake-build-release/cube_pathtrace_final_2048.bmp)
